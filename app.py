@@ -1,53 +1,14 @@
 import streamlit as st
 import pandas as pd
-import random
 
 # Настройка страницы
-st.set_page_config(
-    page_title="Химия 10 - Органикалық химия",
-    page_icon="🧪",
-    layout="wide"
-)
+st.set_page_config(page_title="Химия 10", layout="wide")
 
-# CSS стили
-st.markdown("""
-<style>
-    .main-title {
-        text-align: center;
-        color: #2E86AB;
-        font-size: 2.5em;
-        margin-bottom: 20px;
-    }
-    .lesson-box {
-        background-color: #F0F7FF;
-        padding: 15px;
-        border-radius: 10px;
-        border-left: 5px solid #2E86AB;
-        margin: 10px 0;
-    }
-    .question-box {
-        background-color: #FFF8E1;
-        padding: 15px;
-        border-radius: 8px;
-        margin: 10px 0;
-        border-left: 4px solid #FFA000;
-    }
-    .correct-answer {
-        color: #2E7D32;
-        font-weight: bold;
-    }
-    .wrong-answer {
-        color: #C62828;
-        font-weight: bold;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Заголовок
+st.title("🧪 Органикалық химия - 10 сынып")
+st.subheader("19 сабақ | Әр сабақта 10 сұрақтан тест")
 
-# Главный заголовок
-st.markdown('<h1 class="main-title">🧪 Органикалық химия - 10 сынып</h1>', unsafe_allow_html=True)
-st.markdown("### 34 сабақ | Әр сабақта 19 сұрақтан тест")
-
-# Данные уроков
+# 19 уроков
 lessons = [
     {"id": 1, "title": "Алкандар", "topic": "Қаныққан көмірсутектер"},
     {"id": 2, "title": "Алкендер", "topic": "Қос байланыстар"},
@@ -68,190 +29,170 @@ lessons = [
     {"id": 17, "title": "Қосылу реакциялары", "topic": "Қосылу"},
     {"id": 18, "title": "Ауыстыру реакциялары", "topic": "Ауыстыру"},
     {"id": 19, "title": "Полимерлеу", "topic": "Полимерлер"},
-    {"id": 20, "title": "Изомерлер", "topic": "Изомерлер"},
-    {"id": 21, "title": "Гомологтар", "topic": "Гомологтар"},
-    {"id": 22, "title": "Функционалдық топтар", "topic": "Функционалдық топтар"},
-    {"id": 23, "title": "Качелік реакциялар", "topic": "Качелік реакциялар"},
-    {"id": 24, "title": "Саналық реакциялар", "topic": "Саналық реакциялар"},
-    {"id": 25, "title": "Органикалық синтез", "topic": "Синтез"},
-    {"id": 26, "title": "Биомолекулалар", "topic": "Биомолекулалар"},
-    {"id": 27, "title": "Көмірсутектер қасиеттері", "topic": "Қасиеттер"},
-    {"id": 28, "title": "Органикалық заттар", "topic": "Заттар"},
-    {"id": 29, "title": "Реакция механизмдері", "topic": "Механизмдер"},
-    {"id": 30, "title": "Катализ", "topic": "Катализаторлар"},
-    {"id": 31, "title": "Энергетика", "topic": "Энергия"},
-    {"id": 32, "title": "Кинетика", "topic": "Жылдамдық"},
-    {"id": 33, "title": "Термодинамика", "topic": "Термодинамика"},
-    {"id": 34, "title": "Қорытынды сабақ", "topic": "Қорытынды"}
 ]
 
-# Функция для генерации 19 вопросов для урока
-def generate_questions(lesson_id):
-    questions = []
-    for i in range(1, 20):  # 19 вопросов
-        question = {
-            "question": f"{lesson_id}-сабақ. {i}. Органикалық химияның негізгі ұғымдары қандай?",
-            "options": [
-                "Вариант A: Органикалық қосылыстар",
-                "Вариант B: Көмірсутектер",
-                "Вариант C: Функционалдық топтар", 
-                "Вариант D: Барлығы дұрыс"
-            ],
-            "correct": random.randint(0, 3)  # Случайный правильный ответ
-        }
-        questions.append(question)
-    return questions
+# Вопросы для 8 урока (пример)
+questions_8 = [
+    {
+        "question": "1. Көміртек атомдары арасында тек дара байланыстары бар көмірсутектер қалай аталады?",
+        "options": ["А) Алкендер", "В) Алкиндер", "С) Алкандар", "D) Арендер"],
+        "correct": 2
+    },
+    {
+        "question": "2. Құрамында бір қос байланысы бар көмірсутектердің жалпы формуласы қандай?",
+        "options": ["А) CnH2n+2", "В) CnH2n", "С) CnH2n-2", "D) CnHn"],
+        "correct": 1
+    },
+    {
+        "question": "3. Алкандарға, алкендерге және алкиндерге тән ортақ химиялық қасиет:",
+        "options": ["А) Қосылу реакциясы", "В) Полимерлену реакциясы", 
+                   "С) Тотығу (жану) реакциясы", "D) Орынбасу реакциясы"],
+        "correct": 2
+    },
+    {
+        "question": "4. Көміртек атомдарының гибридтену типін салыстырыңыз. Қай қатар дұрыс (алкан – алкен – алкин)?",
+        "options": ["А) sp³ - sp² - sp", "В) sp² - sp³ - sp", 
+                   "С) sp - sp² - sp³", "D) sp³ - sp - sp²"],
+        "correct": 0
+    },
+    {
+        "question": "5. Қай көмірсутектер класы бром суын түссіздендірмейді?",
+        "options": ["А) Алкендер", "В) Алкиндер", "С) Алкандар", "D) Диендер"],
+        "correct": 2
+    },
+    {
+        "question": "6. Молекуласындағы сутек атомдарының саны ең аз көмірсутектер класы:",
+        "options": ["А) Алкандар", "В) Алкендер", "С) Алкиндер", "D) Циклоалкандар"],
+        "correct": 2
+    },
+    {
+        "question": "7. Байланыс ұзындығының кему реті:",
+        "options": ["А) Дара > Қос > Үш", "В) Үш > Қос > Дара", 
+                   "С) Қос > Дара > Үш", "D) Барлығы бірдей"],
+        "correct": 0
+    },
+    {
+        "question": "8. Алкендер мен алкиндерге тән реакция типі:",
+        "options": ["А) Айрылу", "В) Қосылу", "С) Алмасу", "D) Реакция жоқ"],
+        "correct": 1
+    },
+    {
+        "question": "9. Тек алкиндерге тән сапалық реакция:",
+        "options": ["А) Бром суын түссіздендіру", "В) Күміс оксидімен тұнба", 
+                   "С) Жану", "D) Гидрлену"],
+        "correct": 1
+    },
+    {
+        "question": "10. Көміртек атомдары арасындағы байланыс энергиясы ең жоғары:",
+        "options": ["А) Алкандар", "В) Алкендер", "С) Алкиндер", "D) Барлығы бірдей"],
+        "correct": 2
+    }
+]
 
-# Создаем вопросы для всех уроков
-all_questions = {}
-for lesson in lessons:
-    all_questions[lesson["id"]] = generate_questions(lesson["id"])
+# Вопросы для других уроков (шаблон)
+questions_template = [
+    {
+        "question": f"1. {lessons[0]['title']} туралы сұрақ 1?",
+        "options": ["А) Вариант 1", "В) Вариант 2", "С) Вариант 3", "D) Вариант 4"],
+        "correct": 0
+    },
+    {
+        "question": f"2. {lessons[0]['title']} туралы сұрақ 2?",
+        "options": ["А) Вариант 1", "В) Вариант 2", "С) Вариант 3", "D) Вариант 4"],
+        "correct": 1
+    },
+    # ... и так 10 вопросов
+]
 
-# Инициализация состояния
-if "current_lesson" not in st.session_state:
-    st.session_state.current_lesson = 1
-if "answers" not in st.session_state:
-    st.session_state.answers = {}
-if "test_started" not in st.session_state:
-    st.session_state.test_started = False
+# Показываем список уроков
+st.write("### 📚 Сабақтар тізімі")
+cols = st.columns(3)
+for idx, lesson in enumerate(lessons):
+    with cols[idx % 3]:
+        if st.button(f"Сабақ {lesson['id']}: {lesson['title']}", key=f"btn_{lesson['id']}"):
+            st.session_state.selected_lesson = lesson['id']
+            st.rerun()
 
-# Сайдбар для навигации
-with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/2097/2097067.png", width=100)
-    st.title("📚 Меню")
+# Если урок выбран
+if 'selected_lesson' in st.session_state:
+    lesson_id = st.session_state.selected_lesson
+    lesson = lessons[lesson_id-1]
     
     st.markdown("---")
-    selected_lesson = st.selectbox(
-        "Сабақты таңдаңыз:",
-        options=[f"{l['id']}. {l['title']}" for l in lessons],
-        index=st.session_state.current_lesson-1
-    )
+    st.write(f"## 📖 Сабақ {lesson_id}: {lesson['title']}")
+    st.write(f"**Тақырып:** {lesson['topic']}")
     
-    if st.button("Сабаққа өту", type="primary"):
-        lesson_id = int(selected_lesson.split(".")[0])
-        st.session_state.current_lesson = lesson_id
-        st.session_state.test_started = False
-        st.rerun()
+    # Показываем тест
+    st.write("### ✅ Тест (10 сұрақ)")
     
-    st.markdown("---")
-    st.info("""
-    **Нұсқаулық:**
-    1. Сабақты таңдаңыз
-    2. Тестті бастаңыз
-    3. 19 сұраққа жауап беріңіз
-    4. Нәтижені тексеріңіз
-    """)
-
-# Основной контент
-current_lesson_id = st.session_state.current_lesson
-current_lesson = lessons[current_lesson_id-1]
-
-st.markdown(f'<div class="lesson-box">', unsafe_allow_html=True)
-st.markdown(f"### 📖 Сабақ {current_lesson_id}: {current_lesson['title']}")
-st.markdown(f"**Тақырып:** {current_lesson['topic']}")
-st.markdown('</div>', unsafe_allow_html=True)
-
-# Кнопка начала теста
-if not st.session_state.test_started:
-    if st.button(f"🎯 Сабақ {current_lesson_id} тестін бастау (19 сұрақ)", type="primary", use_container_width=True):
-        st.session_state.test_started = True
-        st.session_state.answers[current_lesson_id] = {}
-        st.rerun()
-
-# Если тест начат
-if st.session_state.test_started and current_lesson_id in all_questions:
-    questions = all_questions[current_lesson_id]
+    # Используем вопросы для 8 урока, для остальных - шаблон
+    if lesson_id == 8:
+        questions = questions_8
+    else:
+        questions = []
+        for i in range(10):
+            questions.append({
+                "question": f"{i+1}. {lesson['title']} туралы сұрақ {i+1}?",
+                "options": ["А) Вариант 1", "В) Вариант 2", "С) Вариант 3", "D) Вариант 4"],
+                "correct": i % 4  # для примера
+            })
     
-    st.markdown(f"### 📝 Тест: {current_lesson['title']}")
-    st.markdown(f"**Сұрақтар саны:** 19")
+    score = 0
+    user_answers = {}
     
-    # Прогресс бар
-    answered_count = len(st.session_state.answers.get(current_lesson_id, {}))
-    progress = answered_count / len(questions)
-    st.progress(progress)
-    st.caption(f"Жауап берілді: {answered_count}/{len(questions)}")
-    
-    # Вопросы
     for i, q in enumerate(questions):
-        st.markdown(f'<div class="question-box">', unsafe_allow_html=True)
-        st.markdown(f"**{i+1}. {q['question']}**")
+        st.write(f"**{q['question']}**")
         
-        # Показываем ответ, если уже отвечали
-        if current_lesson_id in st.session_state.answers and i in st.session_state.answers[current_lesson_id]:
-            user_answer = st.session_state.answers[current_lesson_id][i]
+        # Создаем ключ для каждого вопроса
+        answer_key = f"lesson_{lesson_id}_q_{i}"
+        
+        # Если уже отвечали, показываем результат
+        if answer_key in st.session_state:
+            user_answer = st.session_state[answer_key]
             is_correct = (user_answer == q['correct'])
             
             if is_correct:
-                st.markdown(f'<p class="correct-answer">✓ Сіздің жауабыңыз: {q["options"][user_answer]}</p>', unsafe_allow_html=True)
+                st.success(f"✓ Сіздің жауабыңыз: {q['options'][user_answer]}")
+                score += 1
             else:
-                st.markdown(f'<p class="wrong-answer">✗ Сіздің жауабыңыз: {q["options"][user_answer]}</p>', unsafe_allow_html=True)
-                st.markdown(f'<p class="correct-answer">✓ Дұрыс жауап: {q["options"][q["correct"]]}</p>', unsafe_allow_html=True)
+                st.error(f"✗ Сіздің жауабыңыз: {q['options'][user_answer]}")
+                st.info(f"✓ Дұрыс жауап: {q['options'][q['correct']]}")
         else:
             # Радио-кнопки для ответа
             user_choice = st.radio(
                 f"Жауап {i+1}",
-                options=q["options"],
-                key=f"q{current_lesson_id}_{i}",
+                q["options"],
+                key=f"radio_{lesson_id}_{i}",
                 index=None
             )
             
             if user_choice:
                 selected_index = q["options"].index(user_choice)
-                if current_lesson_id not in st.session_state.answers:
-                    st.session_state.answers[current_lesson_id] = {}
-                st.session_state.answers[current_lesson_id][i] = selected_index
+                st.session_state[answer_key] = selected_index
                 st.rerun()
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.write("---")
     
-    # Кнопка завершения теста
-    if answered_count == len(questions):
-        correct_count = 0
-        for i, q in enumerate(questions):
-            if (current_lesson_id in st.session_state.answers and 
-                i in st.session_state.answers[current_lesson_id] and
-                st.session_state.answers[current_lesson_id][i] == q["correct"]):
-                correct_count += 1
+    # Кнопка проверки
+    if st.button("Тестті аяқтау", type="primary"):
+        total_questions = len(questions)
+        percentage = (score / total_questions) * 100
         
-        percentage = (correct_count / len(questions)) * 100
-        
-        st.markdown("---")
-        st.markdown(f"### 📊 Тест нәтижесі")
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("Дұрыс жауап", f"{correct_count}/{len(questions)}")
-        with col2:
-            st.metric("Ұпай", f"{correct_count*5}")
-        with col3:
-            st.metric("Пайыз", f"{percentage:.1f}%")
+        st.success(f"**Нәтиже: {score}/{total_questions} ({percentage:.0f}%)**")
         
         if percentage >= 90:
-            st.success("🎉 Тамаша! Сіз сабақты жақсы меңгердіңіз!")
             st.balloons()
+            st.info("🎉 Тамаша! Сіз сабақты жақсы меңгердіңиз!")
         elif percentage >= 70:
-            st.info("👍 Жақсы! Бірақ кейбір тақырыптарды қайталаңыз.")
-        elif percentage >= 50:
-            st.warning("⚠️ Орташа. Теорияны қайта оқыңыз.")
+            st.info("👍 Жақсы! Бірақ кейбір тармақтарды қайталаңыз.")
         else:
-            st.error("❌ Әлсіз. Сабақты қайта оқып шығыңыз.")
-        
-        if st.button("🔄 Тестті қайта бастау", type="secondary"):
-            st.session_state.answers[current_lesson_id] = {}
-            st.rerun()
-
-# Нижняя часть
-st.markdown("---")
-st.markdown("""
-<div style="text-align: center; color: gray;">
-    <p>Органикалық химия - 10 сынып | 34 сабақ | 646 сұрақ</p>
-    <p>© 2024 Химия оқу платформасы</p>
-</div>
-""", unsafe_allow_html=True)
+            st.warning("📚 Теорияны қайта оқып шығыңыз.")
+    
+    # Кнопка назад
+    if st.button("← Басты бетке қайту"):
+        del st.session_state.selected_lesson
+        st.rerun()
 
 # Статистика
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 📈 Статистика")
-total_questions = 34 * 19  # 34 урока × 19 вопросов
-st.sidebar.metric("Барлық сұрақтар", total_questions)
-st.sidebar.metric("Барлық сабақтар", 34)
-st.sidebar.metric("Орташа уақыт", "45 мин/сабақ")
+st.markdown("---")
+st.write("**Статистика:** 19 сабақ × 10 сұрақ = 190 сұрақ")
