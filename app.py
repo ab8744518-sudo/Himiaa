@@ -7,7 +7,7 @@ st.title("🧼 Виртуалды зертхана: Сабын алу")
 if 'step' not in st.session_state:
     st.session_state.step = 1
 
-# CSS Анимация стилі
+# CSS Анимация стилі (Колбалардың қозғалысы үшін)
 st.markdown("""
 <style>
     .stage-container {
@@ -35,16 +35,15 @@ st.markdown("""
         border: 3px solid #333; border-radius: 10px;
         opacity: 0;
     }
-    /* Анимация эффектілері */
     @keyframes pour-left {
         0% { left: -100px; opacity: 0; transform: rotate(0deg); }
-        50% { left: 30%; opacity: 1; transform: rotate(45deg); }
-        100% { left: 30%; opacity: 0; transform: rotate(45deg); }
+        50% { left: 35%; opacity: 1; transform: rotate(45deg); }
+        100% { left: 35%; opacity: 0; transform: rotate(45deg); }
     }
     @keyframes pour-right {
         0% { right: -100px; opacity: 0; transform: rotate(0deg); }
-        50% { right: 30%; opacity: 1; transform: rotate(-45deg); }
-        100% { right: 30%; opacity: 0; transform: rotate(-45deg); }
+        50% { right: 35%; opacity: 1; transform: rotate(-45deg); }
+        100% { right: 35%; opacity: 0; transform: rotate(-45deg); }
     }
     .animate-left { animation: pour-left 3s forwards; }
     .animate-right { animation: pour-right 3s forwards; }
@@ -57,76 +56,87 @@ def render_lab(liquid_height, liquid_color, show_anim=False):
     
     html_code = f"""
     <div class="stage-container">
-        <div class="side-flask {anim_class_l}" style="background: #ddd; left: 30%;"></div>
+        <div class="side-flask {anim_class_l}" style="background: #ddd; left: 35%;"></div>
         <div class="main-flask">
             <div class="liquid" style="height: {liquid_height}%; background: {liquid_color};"></div>
         </div>
-        <div class="side-flask {anim_class_r}" style="background: #888; right: 30%;"></div>
+        <div class="side-flask {anim_class_r}" style="background: #888; right: 35%;"></div>
     </div>
     """
     st.components.v1.html(html_code, height=320)
 
 # --- КЕЗЕҢДЕР ---
 if st.session_state.step == 1:
-    st.header("1-кезең: Сілті ерітіндісін дайындау") [cite: 10]
-    st.write("10 г NaOH-ты 20 мл суға қосыңыз.") [cite: 11]
+    st.header("1-кезең: Сілті ерітіндісін дайындау")
+    st.write("10 г NaOH-ты 20 мл суға қосыңыз.")
     
-    col1, col2 = st.columns([1, 3])
-    with col1:
-        start = st.button("Реакцияны бастау")
-    
+    start = st.button("Реакцияны бастау")
     render_lab(40 if start else 0, "#3498db", show_anim=start)
     
     if start:
-        st.info("Экзотермиялық реакция жүріп жатыр... Ерітінді жылынады.") [cite: 11]
+        st.info("Экзотермиялық реакция жүріп жатыр... Ерітінді жылынады.")
         st.divider()
-        ans = st.radio("Сұрақ: Сабындану реакциясы дегеніміз не?", ["Майдың жануы", "Майдың сілтімен әрекеттесіп, сабын мен глицеринге ыдырауы"]) [cite: 21, 22]
-        if st.button("Келесі кезең") and "сілтімен" in ans:
-            st.session_state.step = 2
-            st.rerun()
+        ans = st.radio("Сұрақ: Сабындану реакциясы дегеніміз не?", 
+                      ["Майдың жануы", 
+                       "Майдың сілтімен әрекеттесіп, сабын мен глицеринге ыдырауы"])
+        if st.button("Келесі кезең"):
+            if "сілтімен" in ans:
+                st.session_state.step = 2
+                st.rerun()
+            else:
+                st.error("Қате жауап!")
 
 elif st.session_state.step == 2:
-    st.header("2-кезең: Гидролиз (Май + Спирт + Сілті)") [cite: 12]
-    st.write("Май мен спиртке сілтіні қосыңыз.") [cite: 13, 14]
+    st.header("2-кезең: Гидролиз (Май + Спирт + Сілті)")
+    st.write("Май мен спиртке сілтіні қосыңыз.")
     
     start = st.button("Араластыру")
     render_lab(60 if start else 40, "#f1c40f", show_anim=start)
     
     if start:
         st.divider()
-        ans = st.radio("Сұрақ: Неге сабын алу үшін спирт қолданамыз?", ["Иіс үшін", "Май мен сілті араласуы үшін ортақ еріткіш"]) [cite: 23, 24]
-        if st.button("Келесі кезең") and "ортақ еріткіш" in ans:
-            st.session_state.step = 3
-            st.rerun()
+        ans = st.radio("Сұрақ: Неге сабын алу үшін спирт қолданамыз?", 
+                      ["Иіс үшін", 
+                       "Май мен сілті араласуы үшін ортақ еріткіш"])
+        if st.button("Келесі кезең"):
+            if "ортақ еріткіш" in ans:
+                st.session_state.step = 3
+                st.rerun()
+            else:
+                st.error("Қате!")
 
 elif st.session_state.step == 3:
-    st.header("3-кезең: Су моншасында қыздыру") [cite: 15]
-    st.write("Қоспаны 30-40 минут баяу қайнатыңыз.") [cite: 16]
+    st.header("3-кезең: Су моншасында қыздыру")
+    st.write("Қоспаны 30-40 минут баяу қайнатыңыз.")
     
     start = st.button("Қыздыруды қосу")
-    # Қайнау анимациясы үшін сұйықтық түсін өзгерту
     render_lab(60, "#e67e22" if start else "#f1c40f", show_anim=False)
     
     if start:
-        st.warning("⚠️ Қауіпсіздік: Көзілдірік киюді ұмытпаңыз!") [cite: 16]
+        st.warning("⚠️ Қауіпсіздік: Көзілдірік киюді ұмытпаңыз!")
         if st.button("Келесі кезең"):
             st.session_state.step = 4
             st.rerun()
 
 elif st.session_state.step == 4:
-    st.header("4-кезең: Тұздау (Сабынды бөлу)") [cite: 17, 19]
-    st.write("Қоспаға ас тұзын (NaCl) қосыңыз.") [cite: 18]
+    st.header("4-кезең: Тұздау (Сабынды бөлу)")
+    st.write("Қоспаға ас тұзын (NaCl) қосыңыз.")
     
     start = st.button("Тұзды қосу")
     render_lab(70 if start else 60, "#ffffff" if start else "#e67e22", show_anim=start)
     
     if start:
-        st.success("Сабын бетке қалқып шықты!") [cite: 18]
+        st.success("Сабын бетке қалқып шықты!")
         st.divider()
-        ans = st.radio("Сұрақ: Неге тұз қосқанда сабын бөлінеді?", ["Ерігіштігі төмендегендіктен (Тұздау)", "Тұз майды жеп қояды"]) [cite: 25, 26]
-        if st.button("Аяқтау") and "Тұздау" in ans:
-            st.balloons()
-            st.header("🎉 Зертханалық жұмыс аяқталды!")
-            if st.button("Басынан бастау"):
-                st.session_state.step = 1
-                st.rerun()
+        ans = st.radio("Сұрақ: Неге тұз қосқанда сабын бөлінеді?", 
+                      ["Ерігіштігі төмендегендіктен (Тұздау)", 
+                       "Тұз майды бұзады"])
+        if st.button("Аяқтау"):
+            if "Тұздау" in ans:
+                st.balloons()
+                st.header("🎉 Зертханалық жұмыс аяқталды!")
+                if st.button("Басынан бастау"):
+                    st.session_state.step = 1
+                    st.rerun()
+            else:
+                st.error("Дұрыс жауапты таңдаңыз!")
