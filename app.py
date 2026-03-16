@@ -567,14 +567,3 @@ st.markdown("""
 pip install streamlit
 streamlit run app.py
 ```
-
-**Файл `requirements.txt`** (для деплоя на Streamlit Cloud):
-
-```
-streamlit>=1.35.0
-```
-
-**Деплой на [streamlit.io](https://streamlit.io):**
-1. Загрузите `app.py` и `requirements.txt` на GitHub
-2. Зайдите на [share.streamlit.io](https://share.streamlit.io) → New app → укажите репозиторий
-3. Готово — публичная ссылка появится автоматически
