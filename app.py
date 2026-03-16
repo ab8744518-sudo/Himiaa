@@ -1,133 +1,125 @@
 import streamlit as st
-import time
 
-# Тақырып және стиль
-st.set_page_config(page_title="Этнохимиялық виртуалды зертхана", layout="centered")
+# Беттің баптаулары
+st.set_page_config(page_title="Виртуалды зертхана", layout="centered")
 
-st.markdown("""
+# CSS арқылы колба анимациясын жасау
+def flask_animation(color, bubbles=False):
+    bubble_html = ""
+    if bubbles:
+        bubble_html = '<div class="bubbles"></div>'
+    
+    html_code = f"""
     <style>
-    .stButton>button { width: 100%; border-radius: 20px; height: 3em; background-color: #f0f2f6; }
-    .stProgress > div > div > div > div { background-color: #4CAF50; }
-    .eb-container { border: 2px solid #e6e9ef; padding: 20px; border-radius: 15px; background-color: #fdfdfd; }
+    .flask-container {{
+        display: flex; justify-content: center; align-items: center; height: 200px;
+    }}
+    .flask {{
+        position: relative; width: 100px; height: 120px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 4px solid #333; border-radius: 0 0 50px 50px;
+        overflow: hidden;
+    }}
+    .flask::before {{
+        content: ""; position: absolute; top: -50px; left: 50%;
+        transform: translateX(-50%); width: 40px; height: 60px;
+        border: 4px solid #333; border-bottom: none;
+    }}
+    .liquid {{
+        position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
+        background: {color}; transition: all 1s ease;
+    }}
+    .bubbles {{
+        position: absolute; bottom: 10px; left: 10%; width: 80%; height: 100%;
+        background-image: radial-gradient(circle, white 20%, transparent 20%);
+        background-size: 15px 15px; animation: move 2s linear infinite;
+    }}
+    @keyframes move {{
+        0% {{ transform: translateY(0); }}
+        100% {{ transform: translateY(-50px); opacity: 0; }}
+    }}
     </style>
-    """, unsafe_allow_html=True)
+    <div class="flask-container">
+        <div class="flask">
+            <div class="liquid"></div>
+            {bubble_html}
+        </div>
+    </div>
+    """
+    st.components.v1.html(html_code, height=220)
 
-st.title("🧪 Табиғи майлардан сабын алу")
-st.caption("Зертханалық жұмыс №2 [cite: 1, 2]")
+# Тақырыбы [cite: 2]
+st.title("🧼 Табиғи майлардан сабын алу")
 
-# Прогресс бары
 if 'step' not in st.session_state:
     st.session_state.step = 1
 
-progress_bar = st.progress((st.session_state.step - 1) / 4)
-
-# ---------------------------------------------------------
-# 1-КЕЗЕҢ: СІЛТІ
-# ---------------------------------------------------------
+# Жұмыс барысы 4 кезеңге бөлінген [cite: 9]
+# 1-КЕЗЕҢ
 if st.session_state.step == 1:
-    st.header("1-кезең: Сілті ерітіндісін дайындау [cite: 10]")
-    st.markdown("""
-    <div style="text-align: center; font-size: 70px;"> ⚗️ 💧 </div>
-    """, unsafe_allow_html=True)
-    st.write("10 г натрий гидроксидін (NaOH) 20 мл тазартылған суда мұқият ерітіңіз[cite: 11].")
+    st.header("1-кезең: Сілті ерітіндісін дайындау")
+    st.write("10 г NaOH-ты 20 мл суда ерітіңіз[cite: 11].")
+    flask_animation("#E0E0E0") # Мөлдір сұйықтық
     
-    if st.button("Сілтіні суға қосу"):
-        with st.status("Ерітінді дайындалуда..."):
-            time.sleep(1.5)
-            st.write("🔥 Реакция жылынады, бұл экзотермиялық реакция[cite: 11].")
-            time.sleep(1)
-        st.success("Ерітінді дайын!")
-        
-        st.divider()
-        st.subheader("❓ Бақылау сұрағы:")
-        ans1 = st.radio("Сілтіні суға қосқанда неге жылу бөлінеді?", 
-                        ["Бұл эндотермиялық реакция", "Бұл экзотермиялық реакция [cite: 11]", "Сілті суып жатыр"])
-        
-        if st.button("Келесі кезеңге өту"):
-            if "экзотермиялық" in ans1:
-                st.session_state.step = 2
-                st.rerun()
-            else:
-                st.error("Қате жауап! Қайта ойланып көріңіз.")
+    st.divider()
+    q1 = st.radio("Сұрақ: Сілтіні суда еріткенде не байқалады? [cite: 11]", 
+                  ["Ерітінді суып кетеді", "Ерітінді жылынады (экзотермиялық)", "Ешқандай өзгеріс болмайды"])
+    
+    if st.button("Келесі кезең"):
+        if "жылынады" in q1:
+            st.session_state.step = 2
+            st.rerun()
+        else:
+            st.error("Қате жауап!")
 
-# ---------------------------------------------------------
-# 2-КЕЗЕҢ: ГИДРОЛИЗ
-# ---------------------------------------------------------
+# 2-КЕЗЕҢ
 elif st.session_state.step == 2:
-    st.header("2-кезең: Гидролиз реакциялары [cite: 12]")
-    st.markdown("""
-    <div style="text-align: center; font-size: 70px;"> 🧴 + 🧪 </div>
-    """, unsafe_allow_html=True)
-    st.write("Шыны стаканға 30 мл өсімдік майын және 10 мл спирт құйыңыз[cite: 13].")
+    st.header("2-кезең: Гидролиз реакциялары")
+    st.write("Майға 10 мл спирт және сілті ерітіндісін қосыңыз[cite: 13, 14].")
+    flask_animation("#FFD700") # Май түсі (алтын)
     
-    if st.button("Компоненттерді араластыру"):
-        st.balloons()
-        st.info("Сілті ерітіндісін ақырындап құйып, шыны таяқшамен үздіксіз араластырыңыз[cite: 14].")
-        
-        st.divider()
-        st.subheader("❓ Бақылау сұрағы:")
-        ans2 = st.radio("Неге сабын алу үшін спирт қолданамыз? [cite: 23]", 
-                        ["Май мен сілті араласуы үшін ортақ еріткіш [cite: 24]", "Сабынға иіс беру үшін", "Майды қатыру үшін"])
-        
-        if st.button("Келесі кезеңге өту"):
-            if "ортақ еріткіш" in ans2:
-                st.session_state.step = 3
-                st.rerun()
-            else:
-                st.error("Жауап дұрыс емес!")
+    st.divider()
+    q2 = st.radio("Сұрақ: Неге сабын алу үшін спирт қолданамыз? [cite: 23]", 
+                  ["Иіс беру үшін", "Ортақ еріткіш ретінде реакцияны жылдамдату үшін [cite: 24]", "Сабынды қатыру үшін"])
+    
+    if st.button("Келесі кезең"):
+        if "жылдамдату" in q2:
+            st.session_state.step = 3
+            st.rerun()
+        else:
+            st.error("Қате!")
 
-# ---------------------------------------------------------
-# 3-КЕЗЕҢ: ҚЫЗДЫРУ
-# ---------------------------------------------------------
+# 3-КЕЗЕҢ
 elif st.session_state.step == 3:
-    st.header("3-кезең: Су моншасында қыздыру [cite: 15]")
-    st.markdown("""
-    <div style="text-align: center; font-size: 70px;"> ♨️ 🌡️ </div>
-    """, unsafe_allow_html=True)
-    st.warning("⚠️ Қауіпсіздік: Көзілдірік киіп алыңыз! ")
+    st.header("3-кезең: Су моншасында қыздыру")
+    st.write("30-40 минут баяу қайнатыңыз[cite: 16].")
+    flask_animation("#F4A460", bubbles=True) # Қайнап жатқан қоспа
     
-    temp = st.slider("Температураны көтеріңіз (°C)", 0, 100, 0)
-    if temp >= 80:
-        st.write("✨ Ерітінді су моншасында 30-40 минут баяу қайнауда... ")
-        
-        st.divider()
-        st.subheader("❓ Бақылау сұрағы:")
-        ans3 = st.radio("Сабындану реакциясы дегеніміз не? [cite: 21]", 
-                        ["Майдың еруі", "Майдың сілтімен әрекеттесіп, сабын мен глицеринге ыдырауы [cite: 22]", "Майдың сумен қосылуы"])
-        
-        if st.button("Келесі кезеңге өту"):
-            if "сабын мен глицерин" in ans3:
-                st.session_state.step = 4
-                st.rerun()
-            else:
-                st.error("Қате!")
+    st.divider()
+    q3 = st.radio("Сұрақ: Сабындану реакциясы дегеніміз не? [cite: 21]", 
+                  ["Майдың жануы", "Майдың сілтімен әрекеттесіп, сабын мен глицеринге ыдырауы [cite: 22]", "Майдың булануы"])
+    
+    if st.button("Келесі кезең"):
+        if "сабын мен глицерин" in q3:
+            st.session_state.step = 4
+            st.rerun()
+        else:
+            st.error("Дұрыс емес!")
 
-# ---------------------------------------------------------
-# 4-КЕЗЕҢ: ТҰЗДАУ
-# ---------------------------------------------------------
+# 4-КЕЗЕҢ
 elif st.session_state.step == 4:
-    st.header("4-кезең: Сабынды тұндыру (Тұздау) [cite: 17]")
-    st.markdown("""
-    <div style="text-align: center; font-size: 70px;"> 🧂 🧼 </div>
-    """, unsafe_allow_html=True)
+    st.header("4-кезең: Сабынды тұндыру (Тұздау)")
     st.write("Қоспаға ас тұзының (NaCl) қаныққан ерітіндісін қосыңыз[cite: 18].")
+    flask_animation("#FFFFFF", bubbles=False) # Сабынның бөлінуі (ақ түс)
     
-    if st.button("Тұзды қосу"):
-        st.toast("Сабын бетке қалқып шығуда...")
-        time.sleep(1)
-        st.success("Сабын сұйықтықтың бетіне қалқып шықты! [cite: 18]")
-        
-        st.divider()
-        st.subheader("❓ Соңғы сұрақ:")
-        ans4 = st.radio("Неге тұз (NaCl) қосқанда сабын бөлініп шығады? [cite: 25]", 
-                        ["Сабын еріп кетеді", "Тұздау әсері: судағы ерігіштігі төмендегендіктен [cite: 26]", "Тұз майды ыдыратады"])
-        
-        if st.button("Тәжірибені аяқтау"):
-            if "Тұздау әсері" in ans4:
-                st.balloons()
-                st.header("🎉 Құттықтаймыз! Сабын алынды.")
-                if st.button("Басынан бастау"):
-                    st.session_state.step = 1
-                    st.rerun()
-            else:
-                st.error("Дұрыс жауапты таңдаңыз!")
+    st.divider()
+    q4 = st.radio("Сұрақ: Неге тұз (NaCl) қосқанда сабын бөлініп шығады? [cite: 25]", 
+                  ["Сабын еріп кетеді", "Тұздау әсерінен сабын бетке қалқып шығады [cite: 26]", "Тұз майды бұзады"])
+    
+    if st.button("Аяқтау"):
+        if "Тұздау әсерінен" in q4:
+            st.balloons()
+            st.success("Тәжірибе сәтті аяқталды! Сен сабын алдың! 🧼")
+            if st.button("Басынан бастау"):
+                st.session_state.step = 1
+                st.rerun()
