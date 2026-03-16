@@ -1,5 +1,3 @@
-Вот полный готовый код для Streamlit. Один файл — `app.py`:
-
 ```python
 import streamlit as st
 
